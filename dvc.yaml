@@ -1,0 +1,55 @@
+stages:
+  data_ingestion:
+    cmd: python -m src.data_ingestion
+    deps:
+    - src/data_ingestion.py
+    params:
+    - data_ingestion.train_test_split.test_size
+    - data_ingestion.train_test_split.random_state
+    outs:
+    - data/raw
+
+  data_preprocessing:
+    cmd: python -m src.data_preprocessing
+    deps:
+    - data/raw
+    - src/data_preprocessing.py
+    outs:
+    - data/interim
+
+  feature_engineering:
+    cmd: python -m src.feature_engineering
+    deps:
+    - data/interim
+    - src/feature_engineering.py
+    params:
+    - feature_engineering.tf_idf.max_features
+    outs:
+    - data/processed
+
+  model_building:
+    cmd: python -m src.model_building
+    deps:
+    - data/processed
+    - src/model_building.py
+    params:
+    - model_building.random_forest.n_estimators
+    - model_building.random_forest.random_state
+    outs:
+    - model/model.pkl
+
+  model_evaluation:
+    cmd: python -m src.model_evaluation
+    deps:
+    - model/model.pkl
+    - src/model_evaluation.py
+    metrics:
+    - reports/metrics.json
+
+params:
+- dvclive/params.yaml
+metrics:
+- dvclive/metrics.json
+plots:
+- dvclive/plots/metrics:
+    x: step
