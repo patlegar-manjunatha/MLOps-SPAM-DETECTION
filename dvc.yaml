@@ -33,7 +33,6 @@ stages:
     - data/processed
     - src/model_building.py
     params:
-    - model_building.random_forest.n_estimators
     - model_building.random_forest.random_state
     outs:
     - model/model.pkl
