@@ -24,6 +24,7 @@ stages:
     - src/feature_engineering.py
     params:
     - feature_engineering.tf_idf.max_features
+    - feature_engineering.tf_idf.min_df
     outs:
     - data/processed
 
@@ -33,7 +34,8 @@ stages:
     - data/processed
     - src/model_building.py
     params:
-    - model_building.random_forest.random_state
+    - model_building.random_forest.n_estimators
+    - model_building.random_forest.class_weight
     outs:
     - model/model.pkl
 

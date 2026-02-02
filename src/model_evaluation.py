@@ -37,8 +37,8 @@ def load_data(file_path : str, logger: Logger) -> DataFrame:
 
 def evaluate_model(clf, X_test: np.ndarray, y_test : np.ndarray, logger : Logger) -> dict: 
     try: 
-        y_pred = clf.predict(X_test)
         y_pred_proba = clf.predict_proba(X_test)[:, 1]
+        y_pred = (y_pred_proba > 0.25).astype(int)
 
         accuracy = accuracy_score(y_test, y_pred)
         precision = precision_score(y_test, y_pred)

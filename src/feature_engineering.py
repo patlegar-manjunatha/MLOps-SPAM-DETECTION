@@ -29,7 +29,7 @@ def apply_tfidf(train_data: DataFrame, test_data: DataFrame, params : dict, logg
         X_train = train_data[params['dependent']]
         y_train = train_data[params['target']]
         X_test = test_data[params['dependent']]
-        y_test = train_data[params['target']]
+        y_test = test_data[params['target']]
 
         X_train_bow = tfidf.fit_transform(X_train)
         X_test_bow = tfidf.transform(X_test)
