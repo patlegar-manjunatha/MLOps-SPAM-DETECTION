@@ -14,6 +14,7 @@ dvclive/
 data/
 model/
 reports/
+DVC_STORAGE/
 
 # OS junk
 .DS_Store
