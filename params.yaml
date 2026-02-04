@@ -1,5 +1,5 @@
 data_ingestion: 
-  data_path : ./notebooks/spam_ham_dataset.csv
+  data_path : "https://drive.google.com/uc?id=1EGhVkCwO5lk9FakKrW2-0T3UuZFMKoC5"
   feature_names : 
     target : label
     dependent : text

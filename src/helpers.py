@@ -89,7 +89,7 @@ def load_yaml(params_file_path : str, logger: Logger) -> dict:
 def load_data(file_path: str, logger : Logger) -> DataFrame:
     """Loads data from a csv file_path"""
     try : 
-        df = pd.read_csv(file_path)
+        df = pd.read_csv(file_path, engine='python')
         logger.debug("Data loaded from %s", file_path)
         return df 
     except pd.errors.ParserError as e: 
