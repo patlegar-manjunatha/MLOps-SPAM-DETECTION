@@ -1,8 +1,8 @@
 data_ingestion: 
-  data_path : 'https://raw.githubusercontent.com/vikashishere/Datasets/main/spam.csv'
+  data_path : ./notebooks/spam_ham_dataset.csv
   feature_names : 
-    target : v1
-    dependent : v2
+    target : label
+    dependent : text
   train_test_split:
     test_size: 0.25
     random_state: 42
@@ -10,25 +10,22 @@ data_ingestion:
 data_preprocessing: 
   train_data_path : ./data/raw/train.csv
   test_data_path : ./data/raw/test.csv
-  target : v1
-  dependent : v2
 
 feature_engineering: 
   tf_idf : 
     max_features: 1500
     min_df: 3
-  train_data_path : ./data/interim/train_processed.csv
-  test_data_path : ./data/interim/test_processed.csv
-  target : v1
-  dependent : v2
+  train_data_path : ./data/interim/train.csv
+  test_data_path : ./data/interim/test.csv
+
 
 model_building:
   random_forest: 
     n_estimators : 300
     class_weight : "balanced_subsample"
-  train_data_path : ./data/processed/train_tfidf.csv
+  train_data_path : ./data/processed/train.csv
 
 model_evaluation : 
-  test_data_path : ./data/processed/test_tfidf.csv
+  test_data_path : ./data/processed/test.csv
   model_file_path : ./model/model.pkl
   metrics_json_output : ./reports/metrics.json

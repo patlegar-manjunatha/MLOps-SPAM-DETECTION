@@ -3,6 +3,8 @@ import yaml
 import os 
 from logging import Logger
 from typing import Tuple
+import pandas as pd 
+from pandas import DataFrame
 
 def initiate_file(params_file_path : str, component_name : str) -> Tuple[dict, Logger]:
     """
@@ -80,4 +82,32 @@ def load_yaml(params_file_path : str, logger: Logger) -> dict:
         raise
     except Exception as e : 
         logger.error("ERROR : %s", e)
+        raise
+
+
+## I/O
+def load_data(file_path: str, logger : Logger) -> DataFrame:
+    """Loads data from a csv file_path"""
+    try : 
+        df = pd.read_csv(file_path)
+        logger.debug("Data loaded from %s", file_path)
+        return df 
+    except pd.errors.ParserError as e: 
+        logger.error("Failed to parse the CSV file : %s", e)
+        raise
+    except Exception as e: 
+        logger.error("Unexpected error occured while loading the data : %s", e)
+        raise
+
+
+def save_data(train_data: pd.DataFrame, test_data: pd.DataFrame, data_path: str, logger : Logger) -> None: 
+    try : 
+        raw_data_path = os.path.join(data_path)
+        os.makedirs(raw_data_path, exist_ok=True)
+        train_data.to_csv(os.path.join(raw_data_path, 'train.csv'), index=False)
+        test_data.to_csv(os.path.join(raw_data_path, 'test.csv'), index=False)
+
+        logger.debug("Train and test data saved to %s", raw_data_path)
+    except Exception as e: 
+        logger.error("Unexpected error occured while saving the data: %s", e)
         raise

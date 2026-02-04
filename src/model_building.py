@@ -1,4 +1,4 @@
-from src.helpers import initiate_file
+from src.helpers import initiate_file, load_data
 from logging import Logger
 from pandas import DataFrame
 
@@ -8,17 +8,6 @@ import pandas as pd
 import pickle
 from sklearn.ensemble import RandomForestClassifier
 
-def load_data(filepath : str, logger : Logger) -> DataFrame: 
-    try : 
-        df = pd.read_csv(filepath)
-        logger.debug('Data loaded from %s with shape %s', filepath, df.shape)
-        return df 
-    except pd.errors.ParserError as e: 
-        logger.error('Failed to parse the CSV File : %s', e)
-        raise 
-    except Exception as e : 
-        logger.error("Unexpected error occured while loading the data : %s", e)
-        raise
 
 def train_model(X_train: np.ndarray, y_train: np.ndarray, params : dict, logger: Logger) -> RandomForestClassifier: 
     try : 
@@ -55,7 +44,7 @@ def save_model(model, file_path : str, logger: Logger) -> None:
 
 def main(params: dict, logger: Logger) -> None:
     try : 
-        train_data = pd.read_csv(params['train_data_path'])
+        train_data = load_data(params['train_data_path'], logger=logger)
         X_train = train_data.iloc[:, :-1].values
         y_train = train_data.iloc[:, -1].values
 

@@ -6,7 +6,7 @@ import json
 from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_auc_score
 from dvclive import Live
 
-from src.helpers import initiate_file
+from src.helpers import initiate_file, load_data
 from logging import Logger
 from pandas import DataFrame
 
@@ -21,18 +21,6 @@ def load_model(file_path : str, logger: Logger):
         raise
     except Exception as e: 
         logger.error("Unexpected error occured during model loading : %s", e)
-        raise 
-
-def load_data(file_path : str, logger: Logger) -> DataFrame:
-    try : 
-        df = pd.read_csv(file_path)
-        logger.debug("Data loaded from %s", file_path)
-        return df 
-    except pd.errors.ParserError as e: 
-        logger.error("Data loaded from %s", file_path)
-        raise 
-    except Exception as e: 
-        logger.error("Unexpected error occured during data loading : %s", e)
         raise 
 
 def evaluate_model(clf, X_test: np.ndarray, y_test : np.ndarray, logger : Logger) -> dict: 
