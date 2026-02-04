@@ -13,6 +13,7 @@ dvclive/
 # Data & models (handled by DVC)
 data/
 model/
+reports/
 
 # OS junk
 .DS_Store

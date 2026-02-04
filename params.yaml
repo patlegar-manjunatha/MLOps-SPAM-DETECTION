@@ -4,7 +4,7 @@ data_ingestion:
     target : label
     dependent : text
   train_test_split:
-    test_size: 0.25
+    test_size: 0.30
     random_state: 42
 
 data_preprocessing: 
